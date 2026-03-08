@@ -1,28 +1,941 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Webpage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            line-height: 1.6;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victoria Irizarry | Product &amp; Project Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --navy:    #0f1f3d;
+      --teal:    #0d8a7a;
+      --teal-lt: #e6f4f2;
+      --rose:    #c0504a;
+      --sand:    #f7f4ef;
+      --white:   #ffffff;
+      --gray-1:  #f1f0ee;
+      --gray-2:  #d1cfc9;
+      --gray-3:  #8a8680;
+      --gray-4:  #3d3b38;
+      --text:    #1a1917;
+      --radius:  12px;
+      --shadow:  0 4px 24px rgba(15,31,61,.08);
+      --shadow-lg: 0 12px 48px rgba(15,31,61,.13);
+      --transition: all .25s cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── Typography ────────────────────────────────────────── */
+    h1,h2,h3,h4 { font-weight: 700; line-height: 1.2; }
+    .serif { font-family: 'Fraunces', Georgia, serif; font-weight: 300; font-style: italic; }
+    a { color: var(--teal); text-decoration: none; transition: var(--transition); }
+    a:hover { color: var(--rose); }
+
+    /* ─── Layout helpers ────────────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 12px;
+    }
+    .section-title { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--navy); margin-bottom: 20px; }
+    .section-sub { font-size: 1.05rem; color: var(--gray-3); max-width: 600px; line-height: 1.7; }
+    .divider { width: 48px; height: 3px; background: var(--teal); border-radius: 2px; margin: 16px 0 40px; }
+
+    /* ─── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--gray-1);
+      padding: 0 24px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .nav-logo { font-weight: 800; font-size: 1.1rem; color: var(--navy); letter-spacing: -.02em; }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: .88rem; font-weight: 500; color: var(--gray-4); }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      background: var(--navy); color: var(--white) !important;
+      padding: 8px 18px; border-radius: 8px; font-size: .85rem; font-weight: 600;
+    }
+    .nav-cta:hover { background: var(--teal) !important; color: var(--white) !important; }
+
+    /* ─── HERO ──────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: var(--sand);
+      padding-top: 64px;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(13,138,122,.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: -150px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(192,80,74,.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal-lt); color: var(--teal);
+      border: 1px solid rgba(13,138,122,.2);
+      padding: 6px 14px; border-radius: 50px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .04em;
+      margin-bottom: 20px;
+    }
+    .hero-badge::before { content: '●'; font-size: .5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      color: var(--navy); line-height: 1.05;
+      margin-bottom: 8px; letter-spacing: -.03em;
+    }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-family: 'Fraunces', serif; font-weight: 300; font-style: italic;
+      color: var(--teal); margin-bottom: 24px;
+    }
+    .hero-tagline {
+      font-size: 1.05rem; color: var(--gray-4);
+      max-width: 480px; line-height: 1.75; margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: var(--white);
+      padding: 14px 28px; border-radius: 10px;
+      font-size: .92rem; font-weight: 600;
+      box-shadow: 0 4px 16px rgba(15,31,61,.25);
+      transition: var(--transition);
+    }
+    .btn-primary:hover { background: var(--teal); color: var(--white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,138,122,.3); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid var(--navy); color: var(--navy);
+      padding: 13px 28px; border-radius: 10px;
+      font-size: .92rem; font-weight: 600;
+      transition: var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid var(--gray-2);
+    }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--navy); line-height: 1; }
+    .stat-label { font-size: .78rem; color: var(--gray-3); font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* Hero right panel */
+    .hero-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .hero-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow);
+      border: 1px solid var(--gray-1);
+      transition: var(--transition);
+    }
+    .hero-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .hero-card-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .hero-card h4 { font-size: .88rem; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+    .hero-card p { font-size: .78rem; color: var(--gray-3); line-height: 1.5; }
+    .hero-card.featured { grid-column: span 2; background: var(--navy); color: var(--white); }
+    .hero-card.featured h4 { color: var(--white); font-size: 1rem; }
+    .hero-card.featured p { color: rgba(255,255,255,.65); font-size: .85rem; }
+
+    /* ─── ABOUT ─────────────────────────────────────────────── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-text p { font-size: 1.03rem; color: var(--gray-4); line-height: 1.8; margin-bottom: 16px; }
+    .about-text p strong { color: var(--navy); }
+    .value-list { list-style: none; margin-top: 8px; }
+    .value-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--gray-1);
+      font-size: .95rem; color: var(--gray-4);
+    }
+    .value-list li:last-child { border-bottom: none; }
+    .value-icon { color: var(--teal); font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+    .about-sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-card {
+      background: var(--sand); border-radius: var(--radius); padding: 24px;
+      border-left: 4px solid var(--teal);
+    }
+    .sidebar-card h4 { font-size: .85rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+    .sidebar-card p, .sidebar-card li { font-size: .9rem; color: var(--gray-4); line-height: 1.6; }
+    .sidebar-card ul { list-style: none; }
+    .sidebar-card ul li::before { content: '→ '; color: var(--teal); font-weight: 700; }
+
+    /* ─── PROJECTS ──────────────────────────────────────────── */
+    #projects { background: var(--sand); }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .project-card {
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--gray-1); overflow: hidden;
+      box-shadow: var(--shadow); transition: var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .project-card.featured-card { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+    .project-header {
+      padding: 28px 28px 0;
+    }
+    .project-tag {
+      display: inline-block;
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 50px; margin-bottom: 14px;
+    }
+    .tag-pm   { background: rgba(13,138,122,.1); color: var(--teal); }
+    .tag-ops  { background: rgba(192,80,74,.1); color: var(--rose); }
+    .tag-data { background: rgba(15,31,61,.08); color: var(--navy); }
+    .tag-research { background: rgba(100,60,150,.1); color: #6a3d96; }
+
+    .project-card h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 8px; }
+    .project-card .project-org { font-size: .82rem; color: var(--gray-3); font-weight: 500; margin-bottom: 14px; }
+    .project-body { padding: 0 28px 28px; flex: 1; display: flex; flex-direction: column; }
+    .project-desc { font-size: .92rem; color: var(--gray-4); line-height: 1.75; margin-bottom: 20px; }
+    .project-highlights { list-style: none; margin-bottom: 20px; }
+    .project-highlights li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: .88rem; color: var(--gray-4); line-height: 1.6; padding: 5px 0;
+    }
+    .project-highlights li::before { content: '✦'; color: var(--teal); font-size: .6rem; margin-top: 5px; flex-shrink: 0; }
+    .project-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .chip {
+      font-size: .73rem; font-weight: 600; padding: 4px 12px;
+      background: var(--gray-1); color: var(--gray-4);
+      border-radius: 50px;
+    }
+    .featured-card .project-visual {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3560 100%);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 280px; padding: 40px;
+    }
+    .visual-inner { text-align: center; }
+    .visual-emoji { font-size: 4rem; display: block; margin-bottom: 16px; }
+    .visual-label { color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500; }
+
+    /* ─── EXPERIENCE ────────────────────────────────────────── */
+    #experience { background: var(--white); }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 180px 1fr; gap: 32px; position: relative; padding-bottom: 48px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute;
+      left: 179px; top: 8px; bottom: 0;
+      width: 1px; background: var(--gray-2);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-date { font-size: .82rem; font-weight: 600; color: var(--gray-3); text-align: right; padding-top: 4px; }
+    .timeline-dot {
+      position: absolute; left: 172px; top: 6px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--white); border: 3px solid var(--teal);
+      z-index: 1;
+    }
+    .timeline-content { padding-left: 24px; }
+    .timeline-role { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .timeline-org { font-size: .9rem; color: var(--teal); font-weight: 500; margin-bottom: 12px; }
+    .timeline-list { list-style: none; }
+    .timeline-list li {
+      font-size: .9rem; color: var(--gray-4); line-height: 1.7;
+      padding: 3px 0; padding-left: 16px; position: relative;
+    }
+    .timeline-list li::before { content: '›'; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+
+    /* ─── SKILLS ────────────────────────────────────────────── */
+    #skills { background: var(--navy); }
+    #skills .section-label { color: rgba(255,255,255,.5); }
+    #skills .section-title { color: var(--white); }
+    #skills .divider { background: var(--teal); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .skill-category {
+      background: rgba(255,255,255,.06); border-radius: var(--radius);
+      padding: 28px; border: 1px solid rgba(255,255,255,.08);
+      transition: var(--transition);
+    }
+    .skill-category:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+    .skill-cat-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .skill-cat-name { font-size: .88rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); margin-bottom: 16px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-size: .78rem; padding: 5px 12px; border-radius: 50px;
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.1); font-weight: 500;
+    }
+
+    /* ─── EDUCATION ─────────────────────────────────────────── */
+    #education { background: var(--sand); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .edu-card {
+      background: var(--white); border-radius: 16px;
+      padding: 32px; border: 1px solid var(--gray-1); box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .edu-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 4px; background: var(--teal);
+    }
+    .edu-card.current::before { background: linear-gradient(90deg, var(--teal), var(--rose)); }
+    .edu-badge {
+      display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+      background: var(--teal-lt); color: var(--teal); margin-bottom: 12px;
+    }
+    .edu-school { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .edu-degree { font-size: .93rem; color: var(--gray-4); margin-bottom: 4px; }
+    .edu-meta { font-size: .82rem; color: var(--gray-3); margin-bottom: 16px; }
+    .edu-gpa { font-size: 1.4rem; font-weight: 800; color: var(--teal); }
+    .edu-gpa span { font-size: .8rem; font-weight: 500; color: var(--gray-3); }
+    .edu-honors { margin-top: 16px; list-style: none; }
+    .edu-honors li { font-size: .85rem; color: var(--gray-4); padding: 4px 0; display: flex; gap: 8px; }
+    .edu-honors li::before { content: '🏅'; font-size: .75rem; }
+
+    /* ─── CERTIFICATIONS ────────────────────────────────────── */
+    #certifications { background: var(--white); }
+    .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cert-card {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 20px; border-radius: var(--radius);
+      border: 1px solid var(--gray-1); background: var(--white);
+      transition: var(--transition);
+    }
+    .cert-card:hover { border-color: var(--teal); box-shadow: 0 4px 16px rgba(13,138,122,.12); transform: translateY(-2px); }
+    .cert-logo { font-size: 1.5rem; flex-shrink: 0; }
+    .cert-name { font-size: .88rem; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+    .cert-issuer { font-size: .78rem; color: var(--gray-3); }
+
+    /* ─── CONTACT ───────────────────────────────────────────── */
+    #contact {
+      background: var(--navy); text-align: center; padding: 96px 0;
+    }
+    #contact .section-label { color: rgba(255,255,255,.4); }
+    #contact .section-title { color: var(--white); }
+    #contact p { color: rgba(255,255,255,.6); max-width: 500px; margin: 0 auto 40px; font-size: 1.02rem; line-height: 1.75; }
+    .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 24px; border-radius: 10px;
+      font-size: .9rem; font-weight: 600;
+      transition: var(--transition);
+    }
+    .contact-link.primary { background: var(--teal); color: var(--white); }
+    .contact-link.secondary { background: rgba(255,255,255,.1); color: var(--white); border: 1px solid rgba(255,255,255,.2); }
+    .contact-link:hover { transform: translateY(-3px); color: var(--white); }
+    .contact-link.primary:hover { background: #0ba090; }
+    .contact-link.secondary:hover { background: rgba(255,255,255,.18); }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: #080f1e; color: rgba(255,255,255,.35);
+      text-align: center; padding: 24px;
+      font-size: .8rem;
+    }
+    footer a { color: rgba(255,255,255,.5); }
+
+    /* ─── Responsive ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner, .about-grid, .edu-grid { grid-template-columns: 1fr; }
+      .hero-card-grid { grid-template-columns: 1fr 1fr; }
+      .hero-card.featured { grid-column: span 2; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured-card { grid-column: span 1; grid-template-columns: 1fr; }
+      .featured-card .project-visual { min-height: 160px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .cert-grid { grid-template-columns: 1fr 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::before { display: none; }
+      .timeline-date { text-align: left; }
+      .timeline-dot { display: none; }
+      .timeline-content { padding-left: 0; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .hero-stats { flex-wrap: wrap; gap: 20px; }
+      .skills-grid, .cert-grid { grid-template-columns: 1fr; }
+      .hero-card-grid { grid-template-columns: 1fr; }
+      .hero-card.featured { grid-column: span 1; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to My Webpage!</h1>
-    <p>This is my first website hosted on GitHub Pages.</p>
-    <p>Feel free to customize this with your own content!</p>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="nav-logo">Victoria<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Connect</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">Open to PM & Ops Roles</div>
+        <h1 class="hero-name">Victoria<br/>Irizarry</h1>
+        <p class="hero-title">Product & Project Manager in the making</p>
+        <p class="hero-tagline">
+          Applied Mathematics & Statistics student at Stony Brook University (4.0 GPA) with hands-on experience
+          leading teams, managing operations, and driving outcomes through data. I build things that work,
+          for people who need them most.
+        </p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">View My Work →</a>
+          <a href="mailto:victoria.irizarry@stonybrook.edu" class="btn-outline">Get in Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">4.0</div>
+            <div class="stat-label">GPA at SBU</div>
+          </div>
+          <div>
+            <div class="stat-num">4×</div>
+            <div class="stat-label">Conference Presenter</div>
+          </div>
+          <div>
+            <div class="stat-num">1,000+</div>
+            <div class="stat-label">Students Impacted</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card-grid">
+          <div class="hero-card featured">
+            <div class="hero-card-icon">🍎</div>
+            <h4>FoodFinder App · VIP @ Stony Brook</h4>
+            <p>Leading product coordination &amp; admin operations for a free food-access app serving SBU students, from concept to deployment.</p>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-icon">🚛</div>
+            <h4>Royal Hauling Co.</h4>
+            <p>Managing admin, logistics & operations for a growing dump truck business (2 trucks → scaling).</p>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-icon">🔬</div>
+            <h4>NIH-T34 Research Scholar</h4>
+            <p>Led bacteriophage research. Presented at ASBMB National Conference in Chicago.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">I manage complexity<br/><span class="serif">and make it look easy.</span></h2>
+        <div class="divider"></div>
+        <p>
+          I'm a <strong>first-generation college student</strong> at Stony Brook University studying Applied Mathematics
+          & Statistics with a minor in Technology & Society Management (TSM). I transferred from QCC with a 3.9 GPA
+          and hit the ground running with a 4.0 at SBU.
+        </p>
+        <p>
+          My path hasn't been linear, and that's exactly what makes me a better project manager. I've led research
+          that reached a national stage, organized events for thousands of students, streamlined operations at a medical
+          practice, and now I'm building and managing real products and businesses from the ground up.
+        </p>
+        <p>
+          I combine <strong>quantitative rigor</strong> with <strong>people-first thinking</strong>: I know how to
+          read a dataset and I know how to read a room. For me, product and project management is the perfect intersection
+          of structure, strategy, and human impact.
+        </p>
+        <ul class="value-list">
+          <li><span class="value-icon">→</span>Data-informed decision making without losing the human context</li>
+          <li><span class="value-icon">→</span>Cross-functional coordination across teams, stakeholders & timelines</li>
+          <li><span class="value-icon">→</span>Building systems that scale: from 1 truck to a fleet, from prototype to product</li>
+          <li><span class="value-icon">→</span>Communicating complex ideas clearly, to any audience</li>
+        </ul>
+      </div>
+      <div class="about-sidebar">
+        <div class="sidebar-card">
+          <h4>Currently</h4>
+          <ul>
+            <li>B.S. Applied Math & Statistics, Stony Brook University</li>
+            <li>Minor in Technology & Society Management</li>
+            <li>VIP Team: FoodFinder App (Product &amp; Admin)</li>
+            <li>SHPE Undergraduate Representative</li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>PM Toolkit</h4>
+          <ul>
+            <li>Stakeholder management & communication</li>
+            <li>Operations & logistics coordination</li>
+            <li>Data analysis (Python, R)</li>
+            <li>Project scoping & roadmapping</li>
+            <li>Cross-functional team leadership</li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>What Drives Me</h4>
+          <p>Expanding access to food, education, and opportunity. Every project I take on ties back to building something that genuinely helps people who've been overlooked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects" class="section">
+  <div class="container">
+    <p class="section-label">Featured Work</p>
+    <h2 class="section-title">Projects & Initiatives</h2>
+    <div class="divider"></div>
+    <div class="projects-grid">
+
+      <!-- FoodFinder: Featured -->
+      <div class="project-card featured-card">
+        <div class="project-visual">
+          <div class="visual-inner">
+            <span class="visual-emoji">🍎</span>
+            <p class="visual-label">Product · VIP @ Stony Brook · 2025–Present</p>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column;">
+          <div class="project-header">
+            <span class="project-tag tag-pm">Product Management</span>
+            <h3>FoodFinder: Free Food Access App</h3>
+            <p class="project-org">Vertically Integrated Project (VIP), Stony Brook University</p>
+          </div>
+          <div class="project-body">
+            <p class="project-desc">
+              A mobile app connecting Stony Brook students with free on-campus food events in real time.
+              I serve on the cross-functional VIP team and own the administrative and logistics side,
+              coordinating stakeholders, managing timelines, and ensuring the team stays aligned from
+              discovery to deployment.
+            </p>
+            <ul class="project-highlights">
+              <li>Scoping and coordinating product requirements across technical and non-technical team members</li>
+              <li>Managing administrative operations: documentation, scheduling, stakeholder updates</li>
+              <li>Conducted competitive analysis to define product positioning and feature priorities</li>
+              <li>Collecting and synthesizing user survey data to inform roadmap decisions</li>
+              <li>Driving logistics to ensure on-time delivery of milestones within academic timeline</li>
+            </ul>
+            <div class="project-chips">
+              <span class="chip">Product Coordination</span>
+              <span class="chip">Stakeholder Mgmt</span>
+              <span class="chip">User Research</span>
+              <span class="chip">Roadmapping</span>
+              <span class="chip">Competitive Analysis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Royal Hauling -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-tag tag-ops">Operations</span>
+          <h3>Royal Hauling Co. | Startup Ops</h3>
+          <p class="project-org">Co-Founder / Operations Manager · 2025–Present</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Building the operational backbone of a new dump truck business from the ground up.
+            Starting with 2 trucks, I manage the full administrative and logistics infrastructure
+            so the business can scale efficiently.
+          </p>
+          <ul class="project-highlights">
+            <li>Designed scheduling and dispatch workflows for a 2-truck fleet</li>
+            <li>Handling client contracts, invoicing, and vendor coordination</li>
+            <li>Building compliance, permitting, and documentation systems</li>
+            <li>Tracking revenue, costs, and operational metrics for growth planning</li>
+          </ul>
+          <div class="project-chips">
+            <span class="chip">Business Operations</span>
+            <span class="chip">Logistics</span>
+            <span class="chip">Contracts & Admin</span>
+            <span class="chip">Financial Tracking</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NIH Research -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-tag tag-research">Research</span>
+          <h3>Bacteriophage Discovery for AMR</h3>
+          <p class="project-org">NIH-T34 Bridges to Baccalaureate · NYC Health + Hospitals · 2024–2025</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Selected for a prestigious NIH-funded program to conduct independent biomedical research.
+            Isolated and characterized 3 novel bacteriophages targeting antibiotic-resistant
+            <em>Klebsiella pneumoniae,</em> presenting findings at 4 academic conferences, including nationally.
+          </p>
+          <ul class="project-highlights">
+            <li>Invited Guest Speaker at Queens College Undergraduate Research Day</li>
+            <li>Poster Presenter at ASBMB 2025 National Conference, Chicago, IL</li>
+            <li>QCC Spring Symposium & Undergraduate Research Day presenter</li>
+            <li>Collaborated with NYC Health + Hospitals on clinical strain research</li>
+          </ul>
+          <div class="project-chips">
+            <span class="chip">Research Management</span>
+            <span class="chip">Public Speaking</span>
+            <span class="chip">Cross-org Collaboration</span>
+            <span class="chip">NIH-Funded</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kaggle / Data -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-tag tag-data">Data Analysis</span>
+          <h3>Data Science & Analytics Projects</h3>
+          <p class="project-org">Kaggle · Self-Directed · 2024–2025</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Applied quantitative methods to real-world datasets, building skills in data-driven
+            decision making that directly translate to product and operations management.
+          </p>
+          <ul class="project-highlights">
+            <li><strong>AMR Genomic Analysis:</strong> Python-based analysis of antimicrobial resistance genes in K. pneumoniae</li>
+            <li><strong>Career EDA:</strong> Analyzed salary trends, skills demand, and career pathways using Pandas, Seaborn, Matplotlib</li>
+            <li>Developed proficiency in Python (Pandas, NumPy, Matplotlib, Seaborn) and R</li>
+          </ul>
+          <div class="project-chips">
+            <span class="chip">Python</span>
+            <span class="chip">R</span>
+            <span class="chip">Data Viz</span>
+            <span class="chip">EDA</span>
+            <span class="chip">Kaggle</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<section id="experience" class="section">
+  <div class="container">
+    <p class="section-label">Experience</p>
+    <h2 class="section-title">Where I've Worked & Led</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2024 – Aug 2025</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-role">Assistant to Medical Aestheticians</div>
+          <div class="timeline-org">StudioMD · SoHo, NY</div>
+          <ul class="timeline-list">
+            <li>Youngest team member promoted to top earner; led new site to surpass all legacy locations in revenue and repeat bookings</li>
+            <li>Streamlined the consultation process, directly improving conversion rates and commissions</li>
+            <li>Managed day-to-day site operations including scheduling, staffing logistics, and client relationship management</li>
+            <li>Communicated complex treatment options to patients with clarity and confidence in high-stakes environments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2024 – Aug 2025</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-role">Research Scholar</div>
+          <div class="timeline-org">NIH-T34 Bridges to Baccalaureate · Queens College & QCC</div>
+          <ul class="timeline-list">
+            <li>Selected from competitive applicant pool for NIH-funded research fellowship</li>
+            <li>Isolated 3 novel bacteriophages in collaboration with NYC Health + Hospitals</li>
+            <li>Managed independent research timeline: lab work, data analysis, and 4 conference presentations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Jun 2024 – Aug 2024</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-role">Research Participant: WESTEP</div>
+          <div class="timeline-org">CUNY-wide NIH-Funded Initiative · $1M Grant</div>
+          <ul class="timeline-list">
+            <li>Selected for Wastewater-Based Epidemiology Student Training & Education Program</li>
+            <li>Trained in epidemiological methods for public health monitoring through environmental microbiology</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Sep 2023 – Present</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-role">Peer Mentor</div>
+          <div class="timeline-org">Prison to PhDs (P2P) Mentorship Program</div>
+          <ul class="timeline-list">
+            <li>Mentor justice-impacted scholars through college readiness, goal-setting, and leadership development</li>
+            <li>Build personalized development plans and accountability systems to support long-term success</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2023 – May 2025</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-role">Vice President, Health Sciences Student Club</div>
+          <div class="timeline-org">Queensborough Community College</div>
+          <ul class="timeline-list">
+            <li>Organized and executed academic workshops, wellness events, and speaker series reaching 1,000+ students</li>
+            <li>Coordinated faculty partnerships to expand transfer and professional development opportunities</li>
+            <li>Managed club operations: budgeting, scheduling, cross-departmental communication</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SKILLS ══════════ -->
+<section id="skills" class="section">
+  <div class="container">
+    <p class="section-label">Capabilities</p>
+    <h2 class="section-title">Skills & Toolbox</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">🗂️</div>
+        <div class="skill-cat-name">Project Management</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Project Coordination</span>
+          <span class="skill-tag">Roadmapping</span>
+          <span class="skill-tag">Stakeholder Management</span>
+          <span class="skill-tag">Scoping & Planning</span>
+          <span class="skill-tag">Risk Assessment</span>
+          <span class="skill-tag">Timeline Management</span>
+          <span class="skill-tag">Documentation</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">⚙️</div>
+        <div class="skill-cat-name">Operations & Logistics</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Business Operations</span>
+          <span class="skill-tag">Scheduling & Dispatch</span>
+          <span class="skill-tag">Process Improvement</span>
+          <span class="skill-tag">Vendor Coordination</span>
+          <span class="skill-tag">Contract Administration</span>
+          <span class="skill-tag">Financial Tracking</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">📊</div>
+        <div class="skill-cat-name">Data & Analytics</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python (Pandas, NumPy)</span>
+          <span class="skill-tag">R / Statistics</span>
+          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag">Exploratory Analysis</span>
+          <span class="skill-tag">Applied Mathematics</span>
+          <span class="skill-tag">Bioinformatics</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">🤝</div>
+        <div class="skill-cat-name">Leadership & Communication</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Cross-functional Teams</span>
+          <span class="skill-tag">Public Speaking</span>
+          <span class="skill-tag">Mentorship</span>
+          <span class="skill-tag">Event Planning</span>
+          <span class="skill-tag">Client Relations</span>
+          <span class="skill-tag">Conflict Resolution</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">🧭</div>
+        <div class="skill-cat-name">Product Thinking</div>
+        <div class="skill-tags">
+          <span class="skill-tag">User Research</span>
+          <span class="skill-tag">Competitive Analysis</span>
+          <span class="skill-tag">Feature Prioritization</span>
+          <span class="skill-tag">Go-to-Market Thinking</span>
+          <span class="skill-tag">Data-Driven Decisions</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon">💡</div>
+        <div class="skill-cat-name">Domain Knowledge</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Technology & Society (TSM)</span>
+          <span class="skill-tag">Healthcare Systems</span>
+          <span class="skill-tag">Public Health</span>
+          <span class="skill-tag">STEM Education Equity</span>
+          <span class="skill-tag">Social Impact</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EDUCATION ══════════ -->
+<section id="education" class="section">
+  <div class="container">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="divider"></div>
+    <div class="edu-grid">
+
+      <div class="edu-card current">
+        <span class="edu-badge">Currently Enrolled</span>
+        <div class="edu-school">Stony Brook University</div>
+        <div class="edu-degree">B.S. Applied Mathematics & Statistics</div>
+        <div class="edu-meta">Minor: Technology & Society Management (TSM) · Expected May 2028 · Stony Brook, NY</div>
+        <div class="edu-gpa">4.0 <span>/ 4.0 GPA</span></div>
+        <ul class="edu-honors">
+          <li>Undergraduate Representative, Society of Hispanic Professional Engineers (SHPE)</li>
+          <li>Coursework: Statistics (R), Python (CSE 101), Applied Combinatorics, Cybersecurity (CYB 101), EST 201 (Technology & Society)</li>
+          <li>VIP Team: FoodFinder App (free food access for SBU students)</li>
+        </ul>
+      </div>
+
+      <div class="edu-card">
+        <span class="edu-badge">Completed May 2025</span>
+        <div class="edu-school">Queensborough Community College, CUNY</div>
+        <div class="edu-degree">A.S. Health Sciences</div>
+        <div class="edu-meta">Bayside, NY · Graduated May 2025</div>
+        <div class="edu-gpa">3.9 <span>/ 4.0 GPA</span></div>
+        <ul class="edu-honors">
+          <li>Dean's List, Spring 2024</li>
+          <li>Phi Theta Kappa Honor Society (Lambda Sigma Chapter)</li>
+          <li>NIH-T34 Bridges to the Baccalaureate Scholar</li>
+          <li>Vice President, Health Sciences Student Club</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CERTIFICATIONS ══════════ -->
+<section id="certifications" class="section" style="background:var(--sand); padding-top:0;">
+  <div class="container">
+    <p class="section-label">Certifications</p>
+    <h2 class="section-title">Credentials</h2>
+    <div class="divider"></div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-logo">📗</div>
+        <div>
+          <div class="cert-name">Google Data Analytics Certificate</div>
+          <div class="cert-issuer">Google / Coursera · Jan 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-logo">🏢</div>
+        <div>
+          <div class="cert-name">People & Soft Skills Specialization</div>
+          <div class="cert-issuer">IBM / Coursera · Dec 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-logo">🐍</div>
+        <div>
+          <div class="cert-name">Introduction to Python</div>
+          <div class="cert-issuer">Coursera Project Network · Dec 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-logo">📊</div>
+        <div>
+          <div class="cert-name">Ask Questions to Make Data-Driven Decisions</div>
+          <div class="cert-issuer">Google · Dec 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-logo">🧬</div>
+        <div>
+          <div class="cert-name">Access Bioinformatics Databases with Biopython</div>
+          <div class="cert-issuer">Coursera Project Network · Dec 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-logo">⚖️</div>
+        <div>
+          <div class="cert-name">CITI Research Ethics & Compliance Training</div>
+          <div class="cert-issuer">CITI Program · 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's build something together.</h2>
+    <p>I'm actively seeking internship and project opportunities in product management, operations, and strategy. Let's talk.</p>
+    <div class="contact-links">
+      <a href="mailto:victoria.irizarry@stonybrook.edu" class="contact-link primary">📧 victoria.irizarry@stonybrook.edu</a>
+      <a href="https://www.linkedin.com/in/victoria-a-i/" target="_blank" class="contact-link secondary">💼 LinkedIn</a>
+      <a href="https://www.kaggle.com/VictoriaIrizarry" target="_blank" class="contact-link secondary">📊 Kaggle</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p>© 2025 Victoria Irizarry · Stony Brook, NY · Built with purpose.</p>
+</footer>
+
+<script>
+  // Smooth active nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 80) current = sec.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal)' : '';
+    });
+  });
+</script>
 </body>
 </html>
